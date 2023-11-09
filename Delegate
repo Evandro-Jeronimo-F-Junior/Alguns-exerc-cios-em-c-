@@ -1,0 +1,37 @@
+﻿//class do alarm e que contem o disparador
+class Alarm
+{
+    public delegate void Generico();
+    public event Generico EventoAlarm = delegate{};
+    public void OnDispararEvento()
+    {
+        EventoAlarm?.Invoke();
+    }
+}
+//Classes para inscritos
+class Inscrito
+{
+    private string Nome {get; set;}
+
+    public Inscrito(string nome)
+    {
+        Nome = nome;
+    }
+    
+    public void Subscribe()
+    {
+        Console.WriteLine($"{Nome} esta inscrito");
+    }
+
+}
+
+class Program
+{
+    static void Main()
+    {
+        Alarm alarm = new Alarm();
+        Inscrito inscrito1 = new Inscrito("Joao");
+        alarm.EventoAlarm += inscrito1.Subscribe;
+        alarm.OnDispararEvento();
+    }
+}
